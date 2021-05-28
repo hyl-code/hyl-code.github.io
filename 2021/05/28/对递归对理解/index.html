@@ -20,25 +20,31 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;hyl-code.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;}}</script>
-<meta name="description" content="All the best">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hyl_Zone">
-<meta property="og:url" content="https://hyl-code.github.io/">
+<meta name="description" content="递归简单地说，方法自己调用自己，这种现象就叫递归。递归和循环很像，循环可以改写成递归，但递归却不一定可以改写成循环。 如果是简单循环当然用循环方便些，但在某些情况下，递归比循环要简洁方便很多。 我们先从简单的例子说起，比如，我们要进行求和1~10，用for循环时，是这样的: 12345678public static void main(String[] args)&amp;#123;	int sum &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对递归对理解">
+<meta property="og:url" content="https://hyl-code.github.io/2021/05/28/%E5%AF%B9%E9%80%92%E5%BD%92%E5%AF%B9%E7%90%86%E8%A7%A3/">
 <meta property="og:site_name" content="Hyl_Zone">
-<meta property="og:description" content="All the best">
+<meta property="og:description" content="递归简单地说，方法自己调用自己，这种现象就叫递归。递归和循环很像，循环可以改写成递归，但递归却不一定可以改写成循环。 如果是简单循环当然用循环方便些，但在某些情况下，递归比循环要简洁方便很多。 我们先从简单的例子说起，比如，我们要进行求和1~10，用for循环时，是这样的: 12345678public static void main(String[] args)&amp;#123;	int sum &#x3D;">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://z3.ax1x.com/2021/05/28/2FismR.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/05/28/2Fih1e.jpg">
+<meta property="og:image" content="https://z3.ax1x.com/2021/05/28/2FiRfO.png">
+<meta property="article:published_time" content="2021-05-28T03:46:21.000Z">
+<meta property="article:modified_time" content="2021-05-28T03:46:55.717Z">
 <meta property="article:author" content="hyl-code">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/05/28/2FismR.png">
 
 
-<link rel="canonical" href="https://hyl-code.github.io/">
+<link rel="canonical" href="https://hyl-code.github.io/2021/05/28/%E5%AF%B9%E9%80%92%E5%BD%92%E5%AF%B9%E7%90%86%E8%A7%A3/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:true,&quot;isPost&quot;:false,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:&quot;&quot;,&quot;permalink&quot;:&quot;&quot;,&quot;path&quot;:&quot;index.html&quot;,&quot;title&quot;:&quot;&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;hyl-code.github.io&#x2F;2021&#x2F;05&#x2F;28&#x2F;%E5%AF%B9%E9%80%92%E5%BD%92%E5%AF%B9%E7%90%86%E8%A7%A3&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;28&#x2F;对递归对理解&#x2F;&quot;,&quot;title&quot;:&quot;对递归对理解&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>Hyl_Zone</title><script src="/js/config.js"></script>
+<title>对递归对理解 | Hyl_Zone</title><script src="/js/config.js"></script>
   
 
 
@@ -92,7 +98,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -105,6 +111,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%92%E5%BD%92"><span class="nav-number">1.</span> <span class="nav-text">递归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">在C语言中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8Java%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">在Java中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F"><span class="nav-number">1.2.1.</span> <span class="nav-text">一、冒泡排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0"><span class="nav-number">1.2.2.</span> <span class="nav-text">二、斐波那契数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -148,16 +155,17 @@
 </noscript>
 
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://hyl-code.github.io/2021/05/28/%E5%AF%B9%E9%80%92%E5%BD%92%E5%AF%B9%E7%90%86%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -170,9 +178,9 @@
       <meta itemprop="name" content="Hyl_Zone">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/28/%E5%AF%B9%E9%80%92%E5%BD%92%E5%AF%B9%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">对递归对理解</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          对递归对理解
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -196,7 +204,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>简单地说，<strong>方法自己调用自己</strong>，这种现象就叫递归。递归和循环很像，循环可以改写成递归，但递归却不一定可以改写成循环。</p>
+        <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>简单地说，<strong>方法自己调用自己</strong>，这种现象就叫递归。递归和循环很像，循环可以改写成递归，但递归却不一定可以改写成循环。</p>
 <p>如果是简单循环当然用循环方便些，但在某些情况下，递归比循环要简洁方便很多。</p>
 <p>我们先从简单的例子说起，比如，我们要进行求和1~10，用for循环时，是这样的:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">10</span>; i++)&#123;</span><br><span class="line">    	sum += i;</span><br><span class="line">	&#125;</span><br><span class="line">    System.out.println(<span class="string">&quot;sum = &quot;</span> + sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -230,7 +238,6 @@
 </ul>
 <p>总之，递归的本质就是<strong>方法自己调用自己，只是参数在改变</strong>。</p>
 
-      
     </div>
 
     
@@ -238,11 +245,13 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+
+        
+
     </footer>
   </article>
 </div>
+
 
 
 
