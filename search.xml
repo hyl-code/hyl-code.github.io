@@ -3,7 +3,10 @@
   <entry>
     <title>对递归的理解</title>
     <url>/2021/05/28/%E5%AF%B9%E9%80%92%E5%BD%92%E7%9A%84%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>简单地说，<strong>方法自己调用自己</strong>，这种现象就叫递归。递归和循环很像，循环可以改写成递归，但递归却不一定可以改写成循环。</p>
+    <content><![CDATA[<p>第一篇分享</p>
+<span id="more"></span>
+
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>简单地说，<strong>方法自己调用自己</strong>，这种现象就叫递归。递归和循环很像，循环可以改写成递归，但递归却不一定可以改写成循环。</p>
 <p>如果是简单循环当然用循环方便些，但在某些情况下，递归比循环要简洁方便很多。</p>
 <p>我们先从简单的例子说起，比如，我们要进行求和1~10，用for循环时，是这样的:</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">10</span>; i++)&#123;</span><br><span class="line">    	sum += i;</span><br><span class="line">	&#125;</span><br><span class="line">    System.out.println(<span class="string">&quot;sum = &quot;</span> + sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
