@@ -3,7 +3,7 @@
   <entry>
     <title>对递归的理解</title>
     <url>/2021/05/28/%E5%AF%B9%E9%80%92%E5%BD%92%E7%9A%84%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<p>第一篇分享</p>
+    <content><![CDATA[<p>递归</p>
 <span id="more"></span>
 
 <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>简单地说，<strong>方法自己调用自己</strong>，这种现象就叫递归。递归和循环很像，循环可以改写成递归，但递归却不一定可以改写成循环。</p>
