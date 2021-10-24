@@ -156,7 +156,7 @@
   <entry>
     <title>View的measure流程</title>
     <url>/2021/10/24/View%E7%9A%84measure%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[<p>View 的工作流程，指的就是 measure 、layout 和 draw 。其中，measure 用来测量View的宽和高，layout用来确定View的位置，draw则用来绘制View…</p>
+    <content><![CDATA[<p>measure 作为View工作的三大流程之一，其作用是用来测量View的宽和高…</p>
 <span id="more"></span>
 
 <h2 id="View-的measure流程"><a href="#View-的measure流程" class="headerlink" title="View 的measure流程"></a>View 的measure流程</h2><p>​    <strong>measure 作为View工作的三大流程之一，其作用是用来测量View的宽和高。</strong></p>
