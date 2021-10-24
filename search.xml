@@ -154,8 +154,8 @@
 ]]></content>
   </entry>
   <entry>
-    <title>View的工作流程</title>
-    <url>/2021/10/24/View%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/</url>
+    <title>View的measure流程</title>
+    <url>/2021/10/24/View%E7%9A%84measure%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[<p>View 的工作流程，指的就是 measure 、layout 和 draw 。其中，measure 用来测量View的宽和高，layout用来确定View的位置，draw则用来绘制View…</p>
 <span id="more"></span>
 
