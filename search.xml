@@ -9,109 +9,27 @@
 <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>简单地说，<strong>方法自己调用自己</strong>，这种现象就叫递归。递归和循环很像，循环可以改写成递归，但递归却不一定可以改写成循环。</p>
 <p>如果是简单循环当然用循环方便些，但在某些情况下，递归比循环要简洁方便很多。</p>
 <p>我们先从简单的例子说起，比如，我们要进行求和1~10，用for循环时，是这样的:</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public static void main(String[] args)&#123;
-	int sum &#x3D; 0;
-
-	for(int i &#x3D; 0; i &lt;&#x3D; 10; i++)&#123;
-    	sum +&#x3D; i;
-	&#125;
-    System.out.println(&quot;sum &#x3D; &quot; + sum);
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">10</span>; i++)&#123;</span><br><span class="line">    	sum += i;</span><br><span class="line">	&#125;</span><br><span class="line">    System.out.println(<span class="string">&quot;sum = &quot;</span> + sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>若是用递归，则是这样的:</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public static void main(String[] args)&#123;
-    System.out.println(&quot;sum &#x3D; &quot;+ sum(10));
-&#125;
-
-public static int sum(int n)&#123;
-    if(n &#x3D;&#x3D; 1)
-        return 1;
-    else
-        return sum(n - 1) + n;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;sum = &quot;</span>+ sum(<span class="number">10</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> sum(n - <span class="number">1</span>) + n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这样，递归好像不比循环方便，但在别的应用中就不一样了。</p>
 <h3 id="在C语言中的应用"><a href="#在C语言中的应用" class="headerlink" title="在C语言中的应用"></a>在C语言中的应用</h3><p>例如，我最近在写c语言实验中遇到这样一个题:</p>
 <p><img src="https://i.loli.net/2021/05/30/sf5W4JnC2rg8uRz.png" alt="8.png"></p>
 <p>在写的过程中，我尝试用循环写，但实话说，越写越懵，最后也没能运行成功。</p>
 <p>于是，我问了一个大佬，这才想到用递归方法 :</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">#include &lt;stdio.h&gt;
-void Try(int i);
-
-int like[5][5] &#x3D; &#123;&#123;0,0,1,1,0&#125;, &#123;1,1,0,0,1&#125;, &#123;0,1,1,0,1&#125;, &#123;0,0,0,1,0&#125;, &#123;0,1,0,0,1&#125;&#125;;
-int book[5] &#x3D; &#123;0, 0, 0, 0, 0&#125;;&#x2F;&#x2F;book[i]代表第几个人拿走了第i+1本书.
-int n &#x3D; 0;
-
-void Try(int i)&#123;
-    int j, k;
-
-    for(j &#x3D; 0; j &lt; 5; j++)&#123;
-        if(like[i][j] &#x3D;&#x3D; 1 &amp;&amp; book[j] &#x3D;&#x3D; 0)&#123;
-            book[j] &#x3D; i + 1; &#x2F;&#x2F;将第j+1本书分给第i+1个人
-            if(i &#x3D;&#x3D; 4)&#123;
-                n++;
-                printf(&quot;第%d种分配方案为:\n&quot;,n);
-                for(k &#x3D; 0; k &lt; 5; k++)&#123;
-                    printf(&quot;第%d本书分给%c\n&quot;, k + 1, book[k] + &#39;A&#39; - 1);
-                &#125;
-                printf(&quot;\n&quot;);
-            &#125;else&#123;
-                Try(i + 1); &#x2F;&#x2F;如果还有人没分到书则递归给下一个人分书
-            &#125;
-            book[j] &#x3D; 0; &#x2F;&#x2F;回溯重新将第j本书恢复成未选中状态
-        &#125;
-    &#125;
-&#125;
-
-
-void main()&#123;
-    int i &#x3D; 0;
-
-    Try(i);    
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Try</span><span class="params">(<span class="keyword">int</span> i)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> like[<span class="number">5</span>][<span class="number">5</span>] = &#123;&#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;, &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>&#125;, &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>&#125;, &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>&#125;, &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>&#125;&#125;;</span><br><span class="line"><span class="keyword">int</span> book[<span class="number">5</span>] = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;<span class="comment">//book[i]代表第几个人拿走了第i+1本书.</span></span><br><span class="line"><span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Try</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> j, k;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; <span class="number">5</span>; j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(like[i][j] == <span class="number">1</span> &amp;&amp; book[j] == <span class="number">0</span>)&#123;</span><br><span class="line">            book[j] = i + <span class="number">1</span>; <span class="comment">//将第j+1本书分给第i+1个人</span></span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">4</span>)&#123;</span><br><span class="line">                n++;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;第%d种分配方案为:\n&quot;</span>,n);</span><br><span class="line">                <span class="keyword">for</span>(k = <span class="number">0</span>; k &lt; <span class="number">5</span>; k++)&#123;</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">&quot;第%d本书分给%c\n&quot;</span>, k + <span class="number">1</span>, book[k] + <span class="string">&#x27;A&#x27;</span> - <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                Try(i + <span class="number">1</span>); <span class="comment">//如果还有人没分到书则递归给下一个人分书</span></span><br><span class="line">            &#125;</span><br><span class="line">            book[j] = <span class="number">0</span>; <span class="comment">//回溯重新将第j本书恢复成未选中状态</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    Try(i);    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这样看是不是很清晰地就解决了问题。</p>
 <h3 id="在Java中的应用"><a href="#在Java中的应用" class="headerlink" title="在Java中的应用"></a>在Java中的应用</h3><h4 id="一、冒泡排序"><a href="#一、冒泡排序" class="headerlink" title="一、冒泡排序"></a>一、冒泡排序</h4><p>对一数组进行由大到小排序:</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public static void main(String[] args)&#123;
-    int[] arrays &#x3D; &#123;2, 7, 8, 5, 10, 29, 4, 6&#125;;
-    
-    bubbleSort(arrays, 0, arrays.length - 1);
-    System.out.println(&quot;排序后为:&quot; + arrays);
-&#125;
-
-public static void bubbleSort(int[] arrays, int L, int R)&#123;
-    int temp;
-    
-    if(L !&#x3D; R)&#123;
-        for(int i &#x3D; L; i &lt; R; i++)&#123;
-            if(arrays[i] &lt; arrays[i+1])&#123;
-                temp &#x3D; arrays[i];
-                arrays[i] &#x3D; arrays[i + 1];
-                arrays[i + 1] &#x3D; temp;
-            &#125;
-        &#125;   &#x2F;&#x2F;第一趟排序将最小值放在数组最后面...
-            
-        bubbleSort(arrays, L, R - 1);
-    &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] arrays = &#123;<span class="number">2</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">29</span>, <span class="number">4</span>, <span class="number">6</span>&#125;;</span><br><span class="line">    </span><br><span class="line">    bubbleSort(arrays, <span class="number">0</span>, arrays.length - <span class="number">1</span>);</span><br><span class="line">    System.out.println(<span class="string">&quot;排序后为:&quot;</span> + arrays);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span>[] arrays, <span class="keyword">int</span> L, <span class="keyword">int</span> R)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(L != R)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = L; i &lt; R; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(arrays[i] &lt; arrays[i+<span class="number">1</span>])&#123;</span><br><span class="line">                temp = arrays[i];</span><br><span class="line">                arrays[i] = arrays[i + <span class="number">1</span>];</span><br><span class="line">                arrays[i + <span class="number">1</span>] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;   <span class="comment">//第一趟排序将最小值放在数组最后面...</span></span><br><span class="line">            </span><br><span class="line">        bubbleSort(arrays, L, R - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://i.loli.net/2021/05/30/O6M1v2KaqBEYjbz.jpg" alt="IMG_0184.PNG"></p>
 <p>冒泡排序的具体过程我就不多讲了。</p>
 <h4 id="二、斐波那契数"><a href="#二、斐波那契数" class="headerlink" title="二、斐波那契数"></a>二、斐波那契数</h4><p>这是我在leetcode上找到的一道题，让我们来看一下这道题，很明显，用递归会更加方便。</p>
 <p><img src="https://i.loli.net/2021/05/30/hlgYDctfILqdvTx.png" alt="f.png"></p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public int fib(int n) &#123;
-    int Fib;
-    if(n &#x3D;&#x3D; 1 || n &#x3D;&#x3D; 2)&#123;
-        Fib &#x3D; 1;
-    &#125;
-    else if(n &#x3D;&#x3D; 0)&#123;
-        Fib &#x3D; 0;
-    &#125;
-    else&#123;
-        Fib &#x3D; fib(n - 1) + fib(n - 2);
-    &#125;
-    return Fib;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> Fib;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span> || n == <span class="number">2</span>)&#123;</span><br><span class="line">        Fib = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(n == <span class="number">0</span>)&#123;</span><br><span class="line">        Fib = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        Fib = fib(n - <span class="number">1</span>) + fib(n - <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Fib;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -244,69 +162,7 @@ public static void bubbleSort(int[] arrays, int L, int R)&#123;
 <h2 id="View-的measure流程"><a href="#View-的measure流程" class="headerlink" title="View 的measure流程"></a>View 的measure流程</h2><p>​    <strong>View 的工作流程，指的就是 measure 、 layout 和 draw。其中， measure 用来测量 View 的宽和高， layout 用来确定 View 的位置， draw 则用来绘制 View 。</strong></p>
 <h3 id="理解-MeasureSpec"><a href="#理解-MeasureSpec" class="headerlink" title="理解 MeasureSpec"></a>理解 MeasureSpec</h3><p>​        <strong>MeasureSpec是View的内部类</strong>，<strong>作用于Measure流程中</strong>，其封装了一个View的规格尺寸，包括View的宽和高的信息，系统会将<strong>View的LayoutParams</strong>根据父容器所施加的规则转换成对应的<strong>MeasureSpec</strong>，然后在onMeasure方法中根据这个MeasureSpec来确定View的宽和高。</p>
 <p>MeasureSpec代码如下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public static class MeasureSpec&#123;
-    private static final int MODE_SHIFT &#x3D; 30;
-    private static final int MODE_MASK  &#x3D; 0x3 &lt;&lt; MODE_SHIFT;
-    public static final int UNSPECIFIED &#x3D; 0 &lt;&lt; MODE_SHIFT
-    public static final int EXACTLY     &#x3D; 1 &lt;&lt; MODE_SHIFT;
-    public static final int AT_MOST     &#x3D; 2 &lt;&lt; MODE_SHIFT;
-    
-    public static int makeMeasureSpec(int size, int mode) &#123;
-        if (sUseBrokenMakeMeasureSpec) &#123;
-            return size + mode;
-        &#125; else &#123;
-            return (size &amp; ~MODE_MASK) | (mode &amp; MODE_MASK);
-        &#125;
-    &#125;
-    
-    public static int makeSafeMeasureSpec(int size, int mode) &#123;
-        if (sUseZeroUnspecifiedMeasureSpec &amp;&amp; mode &#x3D;&#x3D; UNSPECIFIED) &#123;
-            return 0;
-        &#125;
-        return makeMeasureSpec(size, mode);
-    &#125;
-
-    public static int getMode(int measureSpec) &#123;
-        return (measureSpec &amp; MODE_MASK);
-    &#125;
-
-    public static int getSize(int measureSpec) &#123;
-        return (measureSpec &amp; ~MODE_MASK);
-    &#125;
-
-    static int adjust(int measureSpec, int delta) &#123;
-        final int mode &#x3D; getMode(measureSpec);
-        int size &#x3D; getSize(measureSpec);
-        if (mode &#x3D;&#x3D; UNSPECIFIED) &#123;
-            return makeMeasureSpec(size, UNSPECIFIED);
-        &#125;
-        size +&#x3D; delta;
-        if (size &lt; 0) &#123;
-            Log.e(VIEW_LOG_TAG, &quot;MeasureSpec.adjust: new size would be negative! (&quot; + size +
-                  &quot;) spec: &quot; + toString(measureSpec) + &quot; delta: &quot; + delta);
-            size &#x3D; 0;
-        &#125;
-        return makeMeasureSpec(size, mode);
-    &#125;
-
-    public static String toString(int measureSpec) &#123;
-        int mode &#x3D; getMode(measureSpec);
-        int size &#x3D; getSize(measureSpec);
-
-        StringBuilder sb &#x3D; new StringBuilder(&quot;MeasureSpec: &quot;);
-
-        if (mode &#x3D;&#x3D; UNSPECIFIED)
-            sb.append(&quot;UNSPECIFIED &quot;);
-        else if (mode &#x3D;&#x3D; EXACTLY)
-            sb.append(&quot;EXACTLY &quot;);
-        else if (mode &#x3D;&#x3D; AT_MOST)
-            sb.append(&quot;AT_MOST &quot;);
-        else
-            sb.append(mode).append(&quot; &quot;);
-        sb.append(size);
-        return sb.toString();
-    &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MeasureSpec</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MODE_SHIFT = <span class="number">30</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MODE_MASK  = <span class="number">0x3</span> &lt;&lt; MODE_SHIFT;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UNSPECIFIED = <span class="number">0</span> &lt;&lt; MODE_SHIFT</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> EXACTLY     = <span class="number">1</span> &lt;&lt; MODE_SHIFT;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> AT_MOST     = <span class="number">2</span> &lt;&lt; MODE_SHIFT;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">makeMeasureSpec</span><span class="params">(<span class="keyword">int</span> size, <span class="keyword">int</span> mode)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sUseBrokenMakeMeasureSpec) &#123;</span><br><span class="line">            <span class="keyword">return</span> size + mode;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> (size &amp; ~MODE_MASK) | (mode &amp; MODE_MASK);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">makeSafeMeasureSpec</span><span class="params">(<span class="keyword">int</span> size, <span class="keyword">int</span> mode)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sUseZeroUnspecifiedMeasureSpec &amp;&amp; mode == UNSPECIFIED) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> makeMeasureSpec(size, mode);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getMode</span><span class="params">(<span class="keyword">int</span> measureSpec)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (measureSpec &amp; MODE_MASK);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getSize</span><span class="params">(<span class="keyword">int</span> measureSpec)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (measureSpec &amp; ~MODE_MASK);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">adjust</span><span class="params">(<span class="keyword">int</span> measureSpec, <span class="keyword">int</span> delta)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> mode = getMode(measureSpec);</span><br><span class="line">        <span class="keyword">int</span> size = getSize(measureSpec);</span><br><span class="line">        <span class="keyword">if</span> (mode == UNSPECIFIED) &#123;</span><br><span class="line">            <span class="keyword">return</span> makeMeasureSpec(size, UNSPECIFIED);</span><br><span class="line">        &#125;</span><br><span class="line">        size += delta;</span><br><span class="line">        <span class="keyword">if</span> (size &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            Log.e(VIEW_LOG_TAG, <span class="string">&quot;MeasureSpec.adjust: new size would be negative! (&quot;</span> + size +</span><br><span class="line">                  <span class="string">&quot;) spec: &quot;</span> + toString(measureSpec) + <span class="string">&quot; delta: &quot;</span> + delta);</span><br><span class="line">            size = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> makeMeasureSpec(size, mode);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">toString</span><span class="params">(<span class="keyword">int</span> measureSpec)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> mode = getMode(measureSpec);</span><br><span class="line">        <span class="keyword">int</span> size = getSize(measureSpec);</span><br><span class="line"></span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder(<span class="string">&quot;MeasureSpec: &quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (mode == UNSPECIFIED)</span><br><span class="line">            sb.append(<span class="string">&quot;UNSPECIFIED &quot;</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (mode == EXACTLY)</span><br><span class="line">            sb.append(<span class="string">&quot;EXACTLY &quot;</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (mode == AT_MOST)</span><br><span class="line">            sb.append(<span class="string">&quot;AT_MOST &quot;</span>);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            sb.append(mode).append(<span class="string">&quot; &quot;</span>);</span><br><span class="line">        sb.append(size);</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>从MeasureSpec常量，我们可以看出它代表32位的 int 值，其中高2位代表SpecMode（测量模式）， 低30位代表SpecSize（测量大小）。</p>
 <p>SpecMode的三种模式：</p>
@@ -317,138 +173,34 @@ public static void bubbleSort(int[] arrays, int L, int R)&#123;
 </ul>
 <h3 id="measure流程"><a href="#measure流程" class="headerlink" title="measure流程"></a>measure流程</h3><p>​        measure的流程分为 View 的 measure 流程和 ViewGroup 的measure流程。</p>
 <h4 id="1-View的measure流程"><a href="#1-View的measure流程" class="headerlink" title="1.View的measure流程"></a>1.View的measure流程</h4><p>首先看一下VIew的onMeasure方法：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;
-    setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),
-                         getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line">    setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),</span><br><span class="line">                         getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>接着看setMeasuredDimension方法：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">protected final void setMeasuredDimension(int measuredWidth, int measuredHeight) &#123;
-    boolean optical &#x3D; isLayoutModeOptical(this);
-    if (optical !&#x3D; isLayoutModeOptical(mParent)) &#123;
-        Insets insets &#x3D; getOpticalInsets();
-        int opticalWidth  &#x3D; insets.left + insets.right;
-        int opticalHeight &#x3D; insets.top  + insets.bottom;
-
-        measuredWidth  +&#x3D; optical ? opticalWidth  : -opticalWidth;
-        measuredHeight +&#x3D; optical ? opticalHeight : -opticalHeight;
-    &#125;
-    setMeasuredDimensionRaw(measuredWidth, measuredHeight);
-&#125;&#x2F;&#x2F;显然是用来设置View的宽和高的<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">setMeasuredDimension</span><span class="params">(<span class="keyword">int</span> measuredWidth, <span class="keyword">int</span> measuredHeight)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> optical = isLayoutModeOptical(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">if</span> (optical != isLayoutModeOptical(mParent)) &#123;</span><br><span class="line">        Insets insets = getOpticalInsets();</span><br><span class="line">        <span class="keyword">int</span> opticalWidth  = insets.left + insets.right;</span><br><span class="line">        <span class="keyword">int</span> opticalHeight = insets.top  + insets.bottom;</span><br><span class="line"></span><br><span class="line">        measuredWidth  += optical ? opticalWidth  : -opticalWidth;</span><br><span class="line">        measuredHeight += optical ? opticalHeight : -opticalHeight;</span><br><span class="line">    &#125;</span><br><span class="line">    setMeasuredDimensionRaw(measuredWidth, measuredHeight);</span><br><span class="line">&#125;<span class="comment">//显然是用来设置View的宽和高的</span></span><br></pre></td></tr></table></figure>
 
 <p>再看getDefaultSize()方法：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public static int getDefaultSize(int size, int measureSpec) &#123;
-    int result &#x3D; size;
-    int specMode &#x3D; MeasureSpec.getMode(measureSpec);
-    int specSize &#x3D; MeasureSpec.getSize(measureSpec);
-
-    switch (specMode) &#123;
-        case MeasureSpec.UNSPECIFIED:
-            result &#x3D; size;
-            break;
-        case MeasureSpec.AT_MOST:
-        case MeasureSpec.EXACTLY:
-            result &#x3D; specSize;
-            break;
-    &#125;
-    return result;
-&#125;&#x2F;&#x2F;根据不同的SpecMode返回不同的SpecSize值<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getDefaultSize</span><span class="params">(<span class="keyword">int</span> size, <span class="keyword">int</span> measureSpec)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = size;</span><br><span class="line">    <span class="keyword">int</span> specMode = MeasureSpec.getMode(measureSpec);</span><br><span class="line">    <span class="keyword">int</span> specSize = MeasureSpec.getSize(measureSpec);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (specMode) &#123;</span><br><span class="line">        <span class="keyword">case</span> MeasureSpec.UNSPECIFIED:</span><br><span class="line">            result = size;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> MeasureSpec.AT_MOST:</span><br><span class="line">        <span class="keyword">case</span> MeasureSpec.EXACTLY:</span><br><span class="line">            result = specSize;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;<span class="comment">//根据不同的SpecMode返回不同的SpecSize值</span></span><br></pre></td></tr></table></figure>
 
 <p>由于getSuggestedMinimumWidth和getSuggestedMinimumHeight原理一样，我们就看其中一个：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">protected int getSuggestedMinimumWidth() &#123;
-	return (mBackground &#x3D;&#x3D; null) ? mMinWidth : max(mMinWidth, mBackground.getMinimumWidth());
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">getSuggestedMinimumWidth</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (mBackground == <span class="keyword">null</span>) ? mMinWidth : max(mMinWidth, mBackground.getMinimumWidth());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>​        若 View 没有设置背景，则取值为 mMinWidth ，mMinWidth可以设置，其对应的是该属性设置的值或者View的setMinimumWidth都值；如果不指定则为0。</p>
 <p>setMinimumWidth方法：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public void setMinimumWidth(int minWidth) &#123;
-	mMinWidth &#x3D; minWidth;
-	requestLayout();
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMinimumWidth</span><span class="params">(<span class="keyword">int</span> minWidth)</span> </span>&#123;</span><br><span class="line">	mMinWidth = minWidth;</span><br><span class="line">	requestLayout();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>mBackground.getMinimumWidth() 中的 mBackground是Drawable类型的，Drawable类的getMinimumWidth方法：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public int getMinimumWidth() &#123;
-    final int intrinsicWidth &#x3D; getIntrinsicWidth();&#x2F;&#x2F;得到Drawable的固有宽度
-    return intrinsicWidth &gt; 0 ? intrinsicWidth : 0;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMinimumWidth</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> intrinsicWidth = getIntrinsicWidth();<span class="comment">//得到Drawable的固有宽度</span></span><br><span class="line">    <span class="keyword">return</span> intrinsicWidth &gt; <span class="number">0</span> ? intrinsicWidth : <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>​        总结一下，getSuggestedMinimumWidth方法就是：如果View没有设置背景，返回mMinWidth；设置背景了，则返回mMinWidth和Drawble大最小宽度之间的最大值。</p>
 <h4 id="2-ViewGroup的Measure流程"><a href="#2-ViewGroup的Measure流程" class="headerlink" title="2.ViewGroup的Measure流程"></a>2.ViewGroup的Measure流程</h4><p>​        <strong>对于ViewGroup，它不仅要测量自身，还要遍历地调用子元素的 measure() 方法。</strong></p>
 <p>ViewGroup中没有定义 onMeasure() 方法，但却定义了 measureChildren() 方法：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">protected void measureChildren(int widthMeasureSpec, int heightMeasureSpec) &#123;
-    final int size &#x3D; mChildrenCount;
-    final View[] children &#x3D; mChildren;
-    for (int i &#x3D; 0; i &lt; size; ++i) &#123;
-        final View child &#x3D; children[i];
-        if ((child.mViewFlags &amp; VISIBILITY_MASK) !&#x3D; GONE) &#123;
-            measureChild(child, widthMeasureSpec, heightMeasureSpec);
-        &#125;
-    &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">measureChildren</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> size = mChildrenCount;</span><br><span class="line">    <span class="keyword">final</span> View[] children = mChildren;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; ++i) &#123;</span><br><span class="line">        <span class="keyword">final</span> View child = children[i];</span><br><span class="line">        <span class="keyword">if</span> ((child.mViewFlags &amp; VISIBILITY_MASK) != GONE) &#123;</span><br><span class="line">            measureChild(child, widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>遍历子元素并调用measureChild方法：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">protected void measureChild(View child, int parentWidthMeasureSpec,int parentHeightMeasureSpec) &#123;
-        final LayoutParams lp &#x3D; child.getLayoutParams();&#x2F;&#x2F;获得子元素的Layoutparams属性
-
-        final int childWidthMeasureSpec &#x3D; getChildMeasureSpec(parentWidthMeasureSpec,
-                mPaddingLeft + mPaddingRight, lp.width);
-        final int childHeightMeasureSpec &#x3D; getChildMeasureSpec(parentHeightMeasureSpec,
-                mPaddingTop + mPaddingBottom, lp.height);
-
-        child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
-    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">measureChild</span><span class="params">(View child, <span class="keyword">int</span> parentWidthMeasureSpec,<span class="keyword">int</span> parentHeightMeasureSpec)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> LayoutParams lp = child.getLayoutParams();<span class="comment">//获得子元素的Layoutparams属性</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec,</span><br><span class="line">                mPaddingLeft + mPaddingRight, lp.width);</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec,</span><br><span class="line">                mPaddingTop + mPaddingBottom, lp.height);</span><br><span class="line"></span><br><span class="line">        child.measure(childWidthMeasureSpec, childHeightMeasureSpec);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p>getChildMeasureSpec() 方法：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">public static int getChildMeasureSpec(int spec, int padding, int childDimension) &#123;
-    int specMode &#x3D; MeasureSpec.getMode(spec);
-    int specSize &#x3D; MeasureSpec.getSize(spec);
-
-    int size &#x3D; Math.max(0, specSize - padding);
-
-    int resultSize &#x3D; 0;
-    int resultMode &#x3D; 0;
-
-    switch (specMode) &#123;
-        case MeasureSpec.EXACTLY:
-            if (childDimension &gt;&#x3D; 0) &#123;
-                resultSize &#x3D; childDimension;
-                resultMode &#x3D; MeasureSpec.EXACTLY;
-            &#125; else if (childDimension &#x3D;&#x3D; LayoutParams.MATCH_PARENT) &#123;
-                resultSize &#x3D; size;
-                resultMode &#x3D; MeasureSpec.EXACTLY;
-            &#125; else if (childDimension &#x3D;&#x3D; LayoutParams.WRAP_CONTENT) &#123;
-                resultSize &#x3D; size;
-                resultMode &#x3D; MeasureSpec.AT_MOST;
-            &#125;
-            break;
-
-        case MeasureSpec.AT_MOST:
-            if (childDimension &gt;&#x3D; 0) &#123;
-                resultSize &#x3D; childDimension;
-                resultMode &#x3D; MeasureSpec.EXACTLY;
-            &#125; else if (childDimension &#x3D;&#x3D; LayoutParams.MATCH_PARENT) &#123;
-                resultSize &#x3D; size;
-                resultMode &#x3D; MeasureSpec.AT_MOST;
-            &#125; else if (childDimension &#x3D;&#x3D; LayoutParams.WRAP_CONTENT) &#123;
-                resultSize &#x3D; size;
-                resultMode &#x3D; MeasureSpec.AT_MOST;
-            &#125;
-            break;
-        case MeasureSpec.UNSPECIFIED:
-            if (childDimension &gt;&#x3D; 0) &#123;
-                resultSize &#x3D; childDimension;
-                resultMode &#x3D; MeasureSpec.EXACTLY;
-            &#125; else if (childDimension &#x3D;&#x3D; LayoutParams.MATCH_PARENT) &#123;
-                resultSize &#x3D; View.sUseZeroUnspecifiedMeasureSpec ? 0 : size;
-                resultMode &#x3D; MeasureSpec.UNSPECIFIED;
-            &#125; else if (childDimension &#x3D;&#x3D; LayoutParams.WRAP_CONTENT) &#123;
-                resultSize &#x3D; View.sUseZeroUnspecifiedMeasureSpec ? 0 : size;
-                resultMode &#x3D; MeasureSpec.UNSPECIFIED;
-            &#125;
-            break;
-    &#125;
-    return MeasureSpec.makeMeasureSpec(resultSize, resultMode);
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getChildMeasureSpec</span><span class="params">(<span class="keyword">int</span> spec, <span class="keyword">int</span> padding, <span class="keyword">int</span> childDimension)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> specMode = MeasureSpec.getMode(spec);</span><br><span class="line">    <span class="keyword">int</span> specSize = MeasureSpec.getSize(spec);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> size = Math.max(<span class="number">0</span>, specSize - padding);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> resultSize = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> resultMode = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (specMode) &#123;</span><br><span class="line">        <span class="keyword">case</span> MeasureSpec.EXACTLY:</span><br><span class="line">            <span class="keyword">if</span> (childDimension &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                resultSize = childDimension;</span><br><span class="line">                resultMode = MeasureSpec.EXACTLY;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (childDimension == LayoutParams.MATCH_PARENT) &#123;</span><br><span class="line">                resultSize = size;</span><br><span class="line">                resultMode = MeasureSpec.EXACTLY;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (childDimension == LayoutParams.WRAP_CONTENT) &#123;</span><br><span class="line">                resultSize = size;</span><br><span class="line">                resultMode = MeasureSpec.AT_MOST;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> MeasureSpec.AT_MOST:</span><br><span class="line">            <span class="keyword">if</span> (childDimension &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                resultSize = childDimension;</span><br><span class="line">                resultMode = MeasureSpec.EXACTLY;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (childDimension == LayoutParams.MATCH_PARENT) &#123;</span><br><span class="line">                resultSize = size;</span><br><span class="line">                resultMode = MeasureSpec.AT_MOST;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (childDimension == LayoutParams.WRAP_CONTENT) &#123;</span><br><span class="line">                resultSize = size;</span><br><span class="line">                resultMode = MeasureSpec.AT_MOST;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> MeasureSpec.UNSPECIFIED:</span><br><span class="line">            <span class="keyword">if</span> (childDimension &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                resultSize = childDimension;</span><br><span class="line">                resultMode = MeasureSpec.EXACTLY;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (childDimension == LayoutParams.MATCH_PARENT) &#123;</span><br><span class="line">                resultSize = View.sUseZeroUnspecifiedMeasureSpec ? <span class="number">0</span> : size;</span><br><span class="line">                resultMode = MeasureSpec.UNSPECIFIED;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (childDimension == LayoutParams.WRAP_CONTENT) &#123;</span><br><span class="line">                resultSize = View.sUseZeroUnspecifiedMeasureSpec ? <span class="number">0</span> : size;</span><br><span class="line">                resultMode = MeasureSpec.UNSPECIFIED;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> MeasureSpec.makeMeasureSpec(resultSize, resultMode);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>​        显然，这是根据父容器的MeasureSpec模式再结合子元素的LayoutParams属性得出来的子元素 MeasureSpec 属性。ViewGroup并没有提供 onMeasure 方法，而是让其子类来各自实现测量的方法，其原因是ViewGroup有不同布局的需要，难以统一。</p>
 ]]></content>
